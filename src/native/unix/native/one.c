@@ -75,7 +75,8 @@ int main(int myargc, char *myargv[]){
 
   argc = addArg(argc,argv,CATALINA_MAIN);
 
-  for(int i=0;i<argc;i++){
+  int i=0;
+  for(i=0;i<argc;i++){
     printf("%s ",argv[i]);
   }
   printf("\n");
