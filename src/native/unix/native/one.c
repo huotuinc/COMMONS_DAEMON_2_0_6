@@ -80,5 +80,5 @@ int main(int myargc, char *myargv[]){
     printf("%s ",argv[i]);
   }
   printf("\n");
-  apacheMain(argc,argv);
+  return apacheMain(argc,argv);
 }
