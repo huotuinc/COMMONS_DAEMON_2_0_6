@@ -1,0 +1,26 @@
+To build the JAVA part:
+ant dist
+
+To build the native part:
+1 - jsvc:
+  cd src/native/unix; configure; make
+  You need a gnu make.
+  The jsvc executable could be found in dist.
+  There is a INSTALL.txt src/native/unix please have a look to it.
+
+  On windoze the additional step is needed:
+  cd src/native/nt; make
+  There is a README in src/native/nt please have a look to it.
+  The exe files are created in dist.
+2 - procrun:
+  procrun is only for windows
+  cd src/native/nt/procrun; make
+  (It is also possible to use the m$ developement tools).
+
+To build the documentation: (See http://jakarta.apache.org/commons/building.html).
+maven site:generate
+(Do not forget to get ../commons-build: (cd ..; svn co http://svn.apache.org/repos/asf/jakarta/commons/proper/commons-build/trunk/ commons-build))
+
+To deploy the documentation to apache site:
+maven -Dmaven.username=${user.name} site:deploy
+(Check <siteAddress/> in project.xml).

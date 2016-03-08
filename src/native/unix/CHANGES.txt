@@ -1,0 +1,30 @@
+JAKARTA COMMONS DAEMON (UNIX) CHANGELOG:
+Last modified at [$Date: 2006-04-27 18:38:15 +0800 (Thu, 27 Apr 2006) $]
+
+Changes with 1.0.1
+  * Allow enableassertions -ea (PR 304310).
+  * Add -lpthread to LDFLAGS on Linux (PR 30177).
+  * Add support for x86_64 (PR 27523).
+  * Add support for Tru64 (PR 29465).
+  * Remove the pid file when son exits correctly (PR 31614).
+  * Add support for JVM-4.1.x on MAC OS X (part of PR 31613).
+  * Prevent starting jsvc several times with the same pidfile (PR 33580).
+  * Finish fixing 31613, automatic detection of JAVA_HOME and headers locations.
+  * -wait and -stop parameters.
+  * fix 34851.
+  * Don't break when set_caps() failed and the user is unchanged (linux).
+
+Changes with next-unreleased-yet version.
+  * Add support for hp-ux.
+  * fix 35017.
+  * fix 36051.
+  * fix 35318.
+  * fix 35340.
+  * fix 36030. (using /proc/self/exe and readlink).
+  * fix 35403.
+  * fix 35659.
+  * fix 36031.
+  * fix 36058. (mask used for pid/log and load: 0077).
+  * fix 38992.
+  * Improve support of Mac OS X Server 10.4
+  * Restart when JVM process is killed (abort is not alway called).
