@@ -8,7 +8,7 @@ int addArg(int argc, char *argv[],char* data){
   return argc+1;
 }
 
-int main(){
+int main(int myargc, char *myargv[]){
   // -pidfile
   char CATALINA_PID[100];
   sprintf(CATALINA_PID,"%s/logs/catalina-daemon.pid",CATALINA_BASE);
