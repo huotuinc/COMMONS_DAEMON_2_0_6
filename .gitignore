@@ -119,6 +119,12 @@ local.properties
 
 # PDT-specific
 .buildpath
+*.cache
+/src/native/unix/Makedefs
+configure
+/src/native/unix/config.status
+*.log
+Makefile
 
 # sbteclipse plugin
 .target
