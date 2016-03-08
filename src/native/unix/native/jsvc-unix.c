@@ -5,9 +5,9 @@
    The ASF licenses this file to You under the Apache License, Version 2.0
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,7 +29,7 @@
 #ifdef OS_LINUX
 #include <sys/prctl.h>
 #include <sys/syscall.h>
-#define _LINUX_FS_H 
+#define _LINUX_FS_H
 #include <linux/capability.h>
 #endif
 #include <time.h>
@@ -166,7 +166,7 @@ static int set_caps(int caps)
 {
     struct __user_cap_header_struct caphead;
     struct __user_cap_data_struct cap;
- 
+
     memset(&caphead, 0, sizeof caphead);
     caphead.version = _LINUX_CAPABILITY_VERSION;
     caphead.pid = 0;
@@ -191,7 +191,7 @@ static int linuxset_user_group(char *user, int uid, int gid)
         log_debug("set_caps(CAPS) failed");
     }
 
-    /* make sure they are kept after setuid */ 
+    /* make sure they are kept after setuid */
     if (prctl(PR_SET_KEEPCAPS,1,0,0,0) < 0) {
         log_error("prctl failed in linuxset_user_group");
         return(-1);
@@ -499,7 +499,7 @@ static int child(arg_data *args, home_data *data, uid_t uid, gid_t gid) {
     int ret=0;
 
     /* check the pid file */
-    ret = check_pid(args); 
+    ret = check_pid(args);
     if (args->vers!=true && args->chck!=true) {
         if (ret==122)
             return(ret);
@@ -620,7 +620,7 @@ static FILE *loc_freopen(char *outfile, char *mode, FILE *stream)
  *  Redirect stdin, stdout, stderr.
  */
 static void set_output(char *outfile, char *errfile) {
-    freopen("/dev/null", "r", stdin); 
+    freopen("/dev/null", "r", stdin);
     log_debug("redirecting stdout to %s and stderr to %s",outfile,errfile);
 
     /* make sure the debug goes out */
@@ -647,7 +647,7 @@ static void set_output(char *outfile, char *errfile) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int apacheMain(int argc, char *argv[]) {
     arg_data *args=NULL;
     home_data *data=NULL;
     int status=0;
@@ -720,7 +720,7 @@ int main(int argc, char *argv[]) {
           strcpy(buf,argv[0]);
         else
           buf[ret]='\0';
-  
+
         filename=buf;
 
         argv[0]=args->procname;
@@ -788,7 +788,7 @@ int main(int argc, char *argv[]) {
                 if (laststart+60>time(NULL)) {
                   log_debug("Waiting 60 s to prevent looping");
                   sleep(60);
-                } 
+                }
                 continue;
             }
             /* If the child got out with 0 he is shutting down */
@@ -807,7 +807,7 @@ int main(int argc, char *argv[]) {
                 if (laststart+60>time(NULL)) {
                   log_debug("Waiting 60 s to prevent looping");
                   sleep(60);
-                } 
+                }
                 continue;
             }
             log_error("Service did not exit cleanly",status);
@@ -830,4 +830,3 @@ void main_shutdown(void) {
     log_debug("Killing self with TERM signal");
     kill(controlled,SIGTERM);
 }
-
