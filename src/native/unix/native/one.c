@@ -9,6 +9,19 @@ int addArg(int argc, char *argv[],char* data){
 }
 
 int main(int myargc, char *myargv[]){
+  int i=0;
+  printf("Before \n");
+  for(i=0;i<myargc;i++){
+    printf("%s ",myargv[i]);
+  }
+  printf("\n");
+
+  char *argv[100];
+  int argc = 0;
+  for (i = 0; i < myargc; i++) {
+    argc=addArg(argc,argv,myargv[i]);
+  }
+
   // -pidfile
   char CATALINA_PID[100];
   sprintf(CATALINA_PID,"%s/logs/catalina-daemon.pid",CATALINA_BASE);
@@ -39,13 +52,12 @@ int main(int myargc, char *myargv[]){
   sprintf(DHome,"-Dcatalina.home=%s",CATALINA_HOME);
   sprintf(DTemp,"-Djava.io.tmpdir=%s",CATALINA_TMP);
 
-  char *argv[100];
 // 只做start和stop
-  int argc = addArg(0,argv,"-cwd");
-  argc = addArg(argc,argv,CATALINA_BASE);
+  // argc = addArg(argc,argv,"-cwd");
+  // argc = addArg(argc,argv,CATALINA_BASE);
   if (strcmp(cmd,"start")==0) {
-    argc = addArg(argc,argv,"-java-home");
-    argc = addArg(argc,argv,JAVA_HOME);
+    // argc = addArg(argc,argv,"-java-home");
+    // argc = addArg(argc,argv,JAVA_HOME);
     // user
     argc = addArg(argc,argv,"-user");
     argc = addArg(argc,argv,TOMCAT_USER);
@@ -56,11 +68,20 @@ int main(int myargc, char *myargv[]){
     argc = addArg(argc,argv,"-outfile");
     argc = addArg(argc,argv,CATALINA_OUT);
 
+    argc = addArg(argc,argv,"-errfile");
+    argc = addArg(argc,argv,"&1");
+
     argc = addArg(argc,argv,LOGGING_CONFIG);
     argc = addArg(argc,argv,JAVA_OPTS);
   }else{
     argc = addArg(argc,argv,"-stop");
   }
+
+  argc = addArg(argc,argv,"-procname");
+  argc = addArg(argc,argv,argv[0]);
+
+  argc = addArg(argc,argv,"-home");
+  argc = addArg(argc,argv,JAVA_HOME);
   // CATALINA_PID="$CATALINA_BASE/logs/catalina-daemon.pid"
   argc = addArg(argc,argv,"-pidfile");
   argc = addArg(argc,argv,CATALINA_PID);
@@ -75,7 +96,8 @@ int main(int myargc, char *myargv[]){
 
   argc = addArg(argc,argv,CATALINA_MAIN);
 
-  int i=0;
+
+  printf("After \n");
   for(i=0;i<argc;i++){
     printf("%s ",argv[i]);
   }

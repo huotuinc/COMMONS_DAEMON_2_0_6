@@ -121,18 +121,20 @@ static void handler(int sig) {
 /* user and group */
 static int set_user_group(char *user, int uid, int gid)
 {
+    log_debug("try set_user_group user:%s,uid:%d,gid:%d",user,uid,gid);
     if (user!=NULL) {
         if (setgid(gid)!=0) {
             log_error("Cannot set group id for user '%s'",user);
             return(-1);
         }
-        if (initgroups(user, gid)!=0) {
-            if (getuid()!= uid) {
-                log_error("Cannot set supplement group list for user '%s'",user);
-                return(-1);
-            } else
-                log_debug("Cannot set supplement group list for user '%s'",user);
-        }
+        // JC works for centos
+        // if (initgroups(user, gid)!=0) {
+        //     if (getuid()!= uid) {
+        //         log_error("Cannot set supplement group list for user '%s' after success init.",user);
+        //         return(-1);
+        //     } else
+        //         log_debug("Cannot set supplement group list for user '%s' after failed init",user);
+        // }
 	if (getuid() == uid) {
             log_debug("No need to change user to '%s'!",user);
             return(0);
@@ -182,14 +184,15 @@ static int set_caps(int caps)
 }
 static int linuxset_user_group(char *user, int uid, int gid)
 {
+    // JC works for centos
     /* set capabilities enough for binding port 80 setuid/getuid */
-    if (set_caps(CAPS)!=0) {
-        if (getuid()!= uid) {
-            log_error("set_caps(CAPS) failed");
-            return(-1);
-        }
-        log_debug("set_caps(CAPS) failed");
-    }
+    // if (set_caps(CAPS)!=0) {
+    //     if (getuid()!= uid) {
+    //         log_error("set_caps(CAPS) failed");
+    //         return(-1);
+    //     }
+    //     log_debug("set_caps(CAPS) failed");
+    // }
 
     /* make sure they are kept after setuid */
     if (prctl(PR_SET_KEEPCAPS,1,0,0,0) < 0) {
@@ -203,14 +206,15 @@ static int linuxset_user_group(char *user, int uid, int gid)
         return(-1);
     }
 
+    // JC works for centos
     /* set capability to binding port 80 read conf */
-    if (set_caps(CAPSMIN)!=0) {
-        if (getuid()!= uid) {
-            log_error("set_caps(CAPSMIN) failed");
-            return(-1);
-        }
-        log_debug("set_caps(CAPSMIN) failed");
-    }
+    // if (set_caps(CAPSMIN)!=0) {
+    //     if (getuid()!= uid) {
+    //         log_error("set_caps(CAPSMIN) failed");
+    //         return(-1);
+    //     }
+    //     log_debug("set_caps(CAPSMIN) failed");
+    // }
 
     return(0);
 }
@@ -681,6 +685,7 @@ int apacheMain(int argc, char *argv[]) {
     /* On some UNIX operating systems, we need to REPLACE this current
        process image with another one (thru execve) to allow the correct
        loading of VMs (notably this is for Linux). Set, replace, and go. */
+    log_debug("Linux check command:%s, args->procname:%s",argv[0],args->procname);
     if (strcmp(argv[0],args->procname)!=0) {
         char *oldpath=getenv("LD_LIBRARY_PATH");
         char *libf=java_library(args,data);
