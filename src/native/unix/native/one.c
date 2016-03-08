@@ -43,7 +43,7 @@ int main(int myargc, char *myargv[]){
 // 只做start和stop
   int argc = addArg(0,argv,"-cwd");
   argc = addArg(argc,argv,CATALINA_BASE);
-  if (strcmp(cmd,"start")) {
+  if (strcmp(cmd,"start")==0) {
     argc = addArg(argc,argv,"-java-home");
     argc = addArg(argc,argv,JAVA_HOME);
     // user
