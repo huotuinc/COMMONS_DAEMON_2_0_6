@@ -10,11 +10,11 @@ int addArg(int argc, char *argv[],char* data){
 
 int main(int myargc, char *myargv[]){
   int i=0;
-  printf("Before \n");
-  for(i=0;i<myargc;i++){
-    printf("%s ",myargv[i]);
-  }
-  printf("\n");
+  // printf("Before \n");
+  // for(i=0;i<myargc;i++){
+  //   printf("%s ",myargv[i]);
+  // }
+  // printf("\n");
 
   char *argv[100];
   int argc = 0;
@@ -97,10 +97,10 @@ int main(int myargc, char *myargv[]){
   argc = addArg(argc,argv,CATALINA_MAIN);
 
 
-  printf("After \n");
-  for(i=0;i<argc;i++){
-    printf("%s ",argv[i]);
-  }
-  printf("\n");
+  // printf("After \n");
+  // for(i=0;i<argc;i++){
+  //   printf("%s ",argv[i]);
+  // }
+  // printf("\n");
   return apacheMain(argc,argv);
 }
